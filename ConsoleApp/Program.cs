@@ -1,84 +1,125 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Business.Domain.Models;
+using Business.Services;
+using System.Collections.Generic;
+using System.Numerics;
+using System.Text;
+
+Console.OutputEncoding = Encoding.UTF8;
+ConsoleKeyInfo userInput;
+PhoneService phoneService = new();
+
 while (true)
 {
-    MainMenu();
-    ConsoleKeyInfo selection = Console.ReadKey();
-    ExitApp(selection);
-    PhoneDetails(selection);
-    ConsoleKeyInfo returnToMenu = Console.ReadKey();
-    ExitApp(returnToMenu);
     Console.Clear();
+    MainMenu();
+    userInput = Console.ReadKey();
+    switch(userInput.Key)
+    {
+        case ConsoleKey.Escape: ExitApp(); break;
+        case ConsoleKey.S:
+            {
+                SortPhones();
+                userInput = Console.ReadKey();
+                if (userInput.Key == ConsoleKey.Escape)
+                    ExitApp();
+                else
+                    PhoneDetails(userInput);
+            } break;
+        case ConsoleKey.F: 
+            {
+                SearchPhones();
+                userInput = Console.ReadKey();
+                if (userInput.Key == ConsoleKey.Escape)
+                    ExitApp();
+                else
+                    PhoneDetails(userInput);
+            } break;
+        default: PhoneDetails(userInput); break;
+    }
+    Console.ReadKey();
 }
 
-static void MainMenu()
+void MainMenu()
 {
+    List<Phone> phoneList = phoneService.GetAll();
     Console.WriteLine(
         "Welcome to the Phoneshop!\n\n" +
-        "Type in a number to see phone details:\n" +
-        "1. Huawei P30\n" +
-        "2. Samsung Galaxy A52\n" +
-        "3. Apple iPhone 11\n" +
-        "4. Google Pixel 4a\n" +
-        "5. Xiaomi Redmi Note 10 Pro");
+        "Type in a number to see phone details:\n");
+    foreach(Phone phone in phoneList)
+    {
+        Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
+    }
+    Console.WriteLine("\nPress 's' to sort the phones by brand." +
+        "\nPress 'f' to search for phones." +
+        "\nPress 'Escape' to exit the application.");
 }
 
-static void PhoneDetails(ConsoleKeyInfo number)
+void PhoneDetails(ConsoleKeyInfo number)
 {
     Console.Clear();
+    int id = 0;
     switch (number.Key)
     {
-        case ConsoleKey.NumPad1:
-        case ConsoleKey.D1:
-            Console.WriteLine(
-            "Phone: Huawei P30\n" +
-            "Price: €697,00\n\n" +
-            "Description:\n" +
-            @"6.47"" FHD+ (2340x1080) OLED, Kirin 980 Octa-Core (2x Cortex-A76 2.6GHz + 2x Cortex-A76 1.92GHz + 4x Cortex-A55 1.8GHz), 8GB RAM, 128GB ROM, 40+20+8+TOF/32MP, Dual SIM, 4200mAh, Android 9.0 + EMUI 9.1");
-            break;
-        case ConsoleKey.NumPad2:
-        case ConsoleKey.D2:
-            Console.WriteLine(
-            "Phone: Samsung Galaxy A52\n" +
-            "Price: €399,00\n\n" +
-            "Description:\n" +
-            @"64 megapixel camera, 4k videokwaliteit 6.5 inch AMOLED scherm 128 GB opslaggeheugen (Uitbreidbaar met Micro-sd) Water- en stofbestendig (IP67)");
-            break;
-        case ConsoleKey.NumPad3:
-        case ConsoleKey.D3:
-            Console.WriteLine(
-            "Phone: Apple iPhone 11\n" +
-            "Price: €619,00\n\n" +
-            "Description:\n" +
-            @"Met de dubbele camera schiet je in elke situatie een perfecte foto of video. De krachtige A13-chipset zorgt voor razendsnelle prestaties. Met Face ID hoef je enkel en alleen naar je toestel te kijken om te ontgrendelen. Het toestel heeft een lange accuduur dankzij een energiezuinige processor");
-            break;
-        case ConsoleKey.NumPad4:
-        case ConsoleKey.D4:
-            Console.WriteLine(
-            "Phone: Google Pixel 4a\n" +
-            "Price: €411,00\n\n" +
-            "Description:\n" +
-            @"12.2 megapixel camera, 4k videokwaliteit 5.81 inch OLED scherm, 128 GB opslaggeheugen 3140 mAh accucapaciteit");
-            break;
-        case ConsoleKey.NumPad5:
-        case ConsoleKey.D5:
-            Console.WriteLine(
-            "Phone: Xiaomi Redmi Note 10 Pro\n" +
-            "Price: €298,00\n\n" +
-            "Description:\n" +
-            @"108 megapixel camera, 4k videokwaliteit 6.67 inch AMOLED scherm, 128 GB opslaggeheugen (Uitbreidbaar met Micro-sd). Water- en stofbestendig (IP53)");
-            break;
-        default: Console.WriteLine("Invalid number. Please enter a valid number."); break;
+        case ConsoleKey.NumPad1: case ConsoleKey.D1: id = 1; break;
+        case ConsoleKey.NumPad2: case ConsoleKey.D2: id = 2; break;
+        case ConsoleKey.NumPad3: case ConsoleKey.D3: id = 3; break;
+        case ConsoleKey.NumPad4: case ConsoleKey.D4: id = 4; break;
+        case ConsoleKey.NumPad5: case ConsoleKey.D5: id = 5; break;
+        default: break;
     }
-    Console.WriteLine("\nPress a key to return to the main menu (or 'Escape' to exit the application).");
+
+    try
+    {
+        Phone phone = phoneService.GetById(id);
+        Console.WriteLine(
+            $"Phone: {phone.Brand} {phone.Type}.\n" +
+            $"Price: {phone.PriceVat.ToString("C")}.\n" +
+            $"In Stock: {phone.Stock}\n\n" +
+            $"Description:\n" +
+            $"{phone.Description}");
+    }
+    catch (NullReferenceException ex)
+    {
+        Console.WriteLine("Invalid phone number. Please enter a valid number");
+    }
+    Console.WriteLine("\nPress a key to return to the main menu.");
 }
 
-static void ExitApp(ConsoleKeyInfo input)
+void SearchPhones()
 {
-    if (input.KeyChar == 27)
+    Console.Clear();
+    Console.WriteLine("What phone are you looking for?");
+    string query = Console.ReadLine();
+    List<Phone> searchResult = phoneService.Search(query);
+    foreach(Phone phone in searchResult)
     {
-        Console.Clear();
-        Environment.Exit(0);
+        Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
     }
+    if(searchResult.Count > 0)
+        Console.WriteLine("Type in a number to select a phone.");
+    else
+        Console.WriteLine("\nWe can't find the phone you are looking for.");
+}
+
+void SortPhones()
+{
+    List<Phone> phoneList = phoneService.Sort();
+    Console.Clear();
+    Console.WriteLine(
+    "Welcome to the Phoneshop!\n\n" +
+    "Type in a number to see phone details:\n");
+    foreach (Phone phone in phoneList)
+    {
+        Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
+    }
+    Console.WriteLine("\nPress 'Escape' to exit the application.");
+}
+
+void ExitApp()
+{
+    Console.Clear();
+    Environment.Exit(0);
 }
 
