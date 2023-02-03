@@ -45,7 +45,7 @@ namespace Business.UnitTests
                 Description = @"108 megapixel camera, 4k videokwaliteit 6.67 inch AMOLED scherm, 128 GB opslaggeheugen (Uitbreidbaar met Micro-sd). Water- en stofbestendig (IP53)" }
             };
         [Fact]
-        public void GetAllReturnsAllPhones()
+        public void ReturnsAllPhones()
         {
             //Assert, Act
             List<Phone> phones = phoneService.GetAll();

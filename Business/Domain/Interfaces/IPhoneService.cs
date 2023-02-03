@@ -15,6 +15,15 @@ namespace Business.Domain.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         Phone GetById(int id);
-
+        /// <summary>
+        /// Returns all phones from list sorted by brand and type.
+        /// </summary>
+        /// <returns></returns>
+        List<Phone> Sort();
+        /// <summary>
+        /// Returns a list of all phones that have the search query in brand, type and/or description.
+        /// </summary>
+        /// <returns></returns>
+        List<Phone> Search(string query);
     }
 }

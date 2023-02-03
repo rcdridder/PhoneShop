@@ -3,20 +3,42 @@
 using Business.Domain.Models;
 using Business.Services;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;
+ConsoleKeyInfo userInput;
 PhoneService phoneService = new();
 
 while (true)
 {
-    MainMenu();
-    ConsoleKeyInfo selection = Console.ReadKey();
-    ExitApp(selection);
-    PhoneDetails(selection);
-    ConsoleKeyInfo returnToMenu = Console.ReadKey();
-    ExitApp(returnToMenu);
     Console.Clear();
+    MainMenu();
+    userInput = Console.ReadKey();
+    switch(userInput.Key)
+    {
+        case ConsoleKey.Escape: ExitApp(); break;
+        case ConsoleKey.S:
+            {
+                SortPhones();
+                userInput = Console.ReadKey();
+                if (userInput.Key == ConsoleKey.Escape)
+                    ExitApp();
+                else
+                    PhoneDetails(userInput);
+            } break;
+        case ConsoleKey.F: 
+            {
+                SearchPhones();
+                userInput = Console.ReadKey();
+                if (userInput.Key == ConsoleKey.Escape)
+                    ExitApp();
+                else
+                    PhoneDetails(userInput);
+            } break;
+        default: PhoneDetails(userInput); break;
+    }
+    Console.ReadKey();
 }
 
 void MainMenu()
@@ -29,6 +51,9 @@ void MainMenu()
     {
         Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
     }
+    Console.WriteLine("\nPress 's' to sort the phones by brand." +
+        "\nPress 'f' to search for phones." +
+        "\nPress 'Escape' to exit the application.");
 }
 
 void PhoneDetails(ConsoleKeyInfo number)
@@ -59,15 +84,42 @@ void PhoneDetails(ConsoleKeyInfo number)
     {
         Console.WriteLine("Invalid phone number. Please enter a valid number");
     }
-    Console.WriteLine("\nPress a key to return to the main menu (or 'Escape' to exit the application).");
+    Console.WriteLine("\nPress a key to return to the main menu.");
 }
 
-void ExitApp(ConsoleKeyInfo input)
+void SearchPhones()
 {
-    if (input.KeyChar == 27)
+    Console.Clear();
+    Console.WriteLine("What phone are you looking for?");
+    string query = Console.ReadLine();
+    List<Phone> searchResult = phoneService.Search(query);
+    foreach(Phone phone in searchResult)
     {
-        Console.Clear();
-        Environment.Exit(0);
+        Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
     }
+    if(searchResult.Count > 0)
+        Console.WriteLine("Type in a number to select a phone.");
+    else
+        Console.WriteLine("\nWe can't find the phone you are looking for.");
+}
+
+void SortPhones()
+{
+    List<Phone> phoneList = phoneService.Sort();
+    Console.Clear();
+    Console.WriteLine(
+    "Welcome to the Phoneshop!\n\n" +
+    "Type in a number to see phone details:\n");
+    foreach (Phone phone in phoneList)
+    {
+        Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
+    }
+    Console.WriteLine("\nPress 'Escape' to exit the application.");
+}
+
+void ExitApp()
+{
+    Console.Clear();
+    Environment.Exit(0);
 }
 

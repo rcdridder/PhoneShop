@@ -47,6 +47,16 @@ namespace Business.Services
 
         public Phone GetById(int id) => phoneList.Find(phone => phone.Id == id);
 
+        public List<Phone> Search(string query)
+        {
+            query = query.ToLower();
+            return phoneList.Where(phone => phone.Brand.ToLower().Contains(query) || 
+                phone.Type.ToLower().Contains(query) || 
+                phone.Description.ToLower().Contains(query)).ToList();
+        }
+
+        public List<Phone> Sort() => phoneList.OrderBy(phone => phone.Brand).ThenBy(phone => phone.Type).ToList(); 
+
         private static decimal CalculatePriceNoVat(decimal priceVat) => priceVat / Convert.ToDecimal(1.21);
 
     }
