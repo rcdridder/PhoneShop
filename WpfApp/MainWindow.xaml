@@ -22,20 +22,32 @@
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Column="0" Grid.Row="0" Margin="5" />
-        <ListBox Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Margin="5">
-            
+        <TextBox Name="tbSearch" TextChanged="tbSearch_TextChanged"
+                 Grid.Column="0" Grid.Row="0" Margin="5" />
+        <ListBox Name="lbPhones" SelectionMode="Single" SelectionChanged="lbPhones_SelectionChanged" 
+                 Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Margin="5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding FullName}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <Label Grid.Column="1" Grid.Row="0" Margin="5" HorizontalAlignment="Center">Brand:</Label>
-        <TextBox Grid.Column="2" Grid.Row="0" Margin="5" IsReadOnly="True"></TextBox>
+        <TextBox Name="tbBrand" 
+                 Grid.Column="2" Grid.Row="0" Margin="5" IsReadOnly="True" />
         <Label Grid.Column="1" Grid.Row="1" Margin="5" HorizontalAlignment="Center"> Type:</Label>
-        <TextBox Grid.Column="2" Grid.Row="1" Margin="5" IsReadOnly="True"></TextBox>
+        <TextBox Name="tbType" 
+                 Grid.Column="2" Grid.Row="1" Margin="5" IsReadOnly="True" />
         <Label Grid.Column="3" Grid.Row="0" Margin="5" HorizontalAlignment="Center">Price:</Label>
-        <TextBox Grid.Column="4" Grid.Row="0" Margin="5" IsReadOnly="True"></TextBox>
+        <TextBox Name="tbPrice" 
+                 Grid.Column="4" Grid.Row="0" Margin="5" IsReadOnly="True" />
         <Label Grid.Column="3" Grid.Row="1" Margin="5" HorizontalAlignment="Center">Stock:</Label>
-        <TextBox Grid.Column="4" Grid.Row="1" Margin="5" IsReadOnly="True"></TextBox>
+        <TextBox Name="tbStock" 
+                 Grid.Column="4" Grid.Row="1" Margin="5" IsReadOnly="True" />
         <Label Grid.Column="1" Grid.Row="2" Margin="5" HorizontalAlignment="Center">Description:</Label>
-        <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5" Margin="10 5" IsReadOnly="True"></TextBox>
-        <Button Grid.Column="5" Grid.Row="4" Margin="5">Exit</Button>
+        <TextBox Name="tbDescription" TextWrapping="Wrap" 
+                 Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5" Margin="10 5" IsReadOnly="True" />
+        <Button Name="btnExit" Click="btnExit_Click"  
+                Grid.Column="5" Grid.Row="4" Margin="5">Exit</Button>
     </Grid>
 </Window>
