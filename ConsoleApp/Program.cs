@@ -1,21 +1,25 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Business.Domain.Interfaces;
 using Business.Domain.Models;
 using Business.Services;
-using System.Collections.Generic;
-using System.Numerics;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;
 ConsoleKeyInfo userInput;
-PhoneService phoneService = new();
+
+IServiceCollection services = new ServiceCollection()
+    .AddScoped<IPhoneService, PhoneService>();
+ServiceProvider serviceProvider = services.BuildServiceProvider();
+IPhoneService phoneService = serviceProvider.GetService<IPhoneService>();
 
 while (true)
 {
     Console.Clear();
     MainMenu();
     userInput = Console.ReadKey();
-    switch(userInput.Key)
+    switch (userInput.Key)
     {
         case ConsoleKey.Escape: ExitApp(); break;
         case ConsoleKey.S:
@@ -26,8 +30,9 @@ while (true)
                     ExitApp();
                 else
                     PhoneDetails(userInput);
-            } break;
-        case ConsoleKey.F: 
+            }
+            break;
+        case ConsoleKey.F:
             {
                 SearchPhones();
                 userInput = Console.ReadKey();
@@ -35,7 +40,8 @@ while (true)
                     ExitApp();
                 else
                     PhoneDetails(userInput);
-            } break;
+            }
+            break;
         default: PhoneDetails(userInput); break;
     }
     Console.ReadKey();
@@ -47,7 +53,7 @@ void MainMenu()
     Console.WriteLine(
         "Welcome to the Phoneshop!\n\n" +
         "Type in a number to see phone details:\n");
-    foreach(Phone phone in phoneList)
+    foreach (Phone phone in phoneList)
     {
         Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
     }
@@ -93,11 +99,11 @@ void SearchPhones()
     Console.WriteLine("What phone are you looking for?");
     string query = Console.ReadLine();
     List<Phone> searchResult = phoneService.Search(query);
-    foreach(Phone phone in searchResult)
+    foreach (Phone phone in searchResult)
     {
         Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
     }
-    if(searchResult.Count > 0)
+    if (searchResult.Count > 0)
         Console.WriteLine("Type in a number to select a phone.");
     else
         Console.WriteLine("\nWe can't find the phone you are looking for.");
