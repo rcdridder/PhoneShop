@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Business.Domain.Interfaces;
+using Business.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
 namespace WpfApp
@@ -13,5 +10,19 @@ namespace WpfApp
     /// </summary>
     public partial class App : Application
     {
+        private ServiceProvider serviceProvider;
+        public App()
+        {
+            IServiceCollection services = new ServiceCollection()
+                .AddSingleton<MainWindow>()
+                .AddScoped<IPhoneService, PhoneService>();
+            serviceProvider = services.BuildServiceProvider();
+        }
+
+        private void OnStartup(object sender, StartupEventArgs e)
+        {
+            MainWindow mainWindow = serviceProvider.GetService<MainWindow>();
+            mainWindow.Show();
+        }
     }
 }

@@ -1,19 +1,10 @@
-﻿using Business.Domain.Models;
+﻿using Business.Domain.Interfaces;
+using Business.Domain.Models;
 using Business.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfApp
 {
@@ -22,17 +13,18 @@ namespace WpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        PhoneService phoneService =new();
-        public MainWindow()
+        IPhoneService phoneService;
+        public MainWindow(IPhoneService phoneService)
         {
+            this.phoneService = phoneService;
             InitializeComponent();
-            lbPhones.ItemsSource= phoneService.Sort();
+            lbPhones.ItemsSource = phoneService.Sort();
         }
 
         private void lbPhones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            if(lbPhones.SelectedItem != null)
+
+            if (lbPhones.SelectedItem != null)
             {
                 Phone phone = lbPhones.SelectedItem as Phone;
                 tbBrand.Text = phone.Brand;
