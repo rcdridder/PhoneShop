@@ -27,8 +27,8 @@ namespace WpfApp
             if (lbPhones.SelectedItem != null)
             {
                 Phone phone = lbPhones.SelectedItem as Phone;
-                tbBrand.Text = phone.Brand;
-                tbType.Text = phone.Type;
+                tbBrand.Text = phone.Brand.BrandName;
+                tbType.Text = phone.Model;
                 tbPrice.Text = phone.PriceVat.ToString("C");
                 tbStock.Text = phone.Stock.ToString();
                 tbDescription.Text = phone.Description;

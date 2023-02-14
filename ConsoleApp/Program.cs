@@ -4,6 +4,7 @@ using Business.Domain.Interfaces;
 using Business.Domain.Models;
 using Business.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Repository;
 using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;
@@ -11,6 +12,7 @@ ConsoleKeyInfo userInput;
 
 IServiceCollection services = new ServiceCollection()
     .AddScoped<IPhoneService, PhoneService>();
+services.AddRepositories();
 ServiceProvider serviceProvider = services.BuildServiceProvider();
 IPhoneService phoneService = serviceProvider.GetService<IPhoneService>();
 
@@ -55,7 +57,7 @@ void MainMenu()
         "Type in a number to see phone details:\n");
     foreach (Phone phone in phoneList)
     {
-        Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
+        Console.WriteLine($"{phone.PhoneId}. {phone.Brand.BrandName} {phone.Model}");
     }
     Console.WriteLine("\nPress 's' to sort the phones by brand." +
         "\nPress 'f' to search for phones." +
@@ -80,7 +82,7 @@ void PhoneDetails(ConsoleKeyInfo number)
     {
         Phone phone = phoneService.GetById(id);
         Console.WriteLine(
-            $"Phone: {phone.Brand} {phone.Type}.\n" +
+            $"Phone: {phone.Brand.BrandName} {phone.Model}.\n" +
             $"Price: {phone.PriceVat.ToString("C")}.\n" +
             $"In Stock: {phone.Stock}\n\n" +
             $"Description:\n" +
@@ -101,7 +103,7 @@ void SearchPhones()
     List<Phone> searchResult = phoneService.Search(query);
     foreach (Phone phone in searchResult)
     {
-        Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
+        Console.WriteLine($"{phone.PhoneId}. {phone.Brand.BrandName} {phone.Model}");
     }
     if (searchResult.Count > 0)
         Console.WriteLine("Type in a number to select a phone.");
@@ -118,7 +120,7 @@ void SortPhones()
     "Type in a number to see phone details:\n");
     foreach (Phone phone in phoneList)
     {
-        Console.WriteLine($"{phone.Id}. {phone.Brand} {phone.Type}");
+        Console.WriteLine($"{phone.PhoneId}. {phone.Brand.BrandName} {phone.Model}");
     }
     Console.WriteLine("\nPress 'Escape' to exit the application.");
 }
