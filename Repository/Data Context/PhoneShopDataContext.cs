@@ -1,11 +1,6 @@
 ﻿using Business.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Business
 {
@@ -16,12 +11,12 @@ namespace Business
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB; Database=PhoneShop; Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["PhoneShop"].ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Brand>().HasData( 
+            modelBuilder.Entity<Brand>().HasData(
                 new Brand { BrandId = 1, BrandName = "Apple" },
                 new Brand { BrandId = 2, BrandName = "Google" },
                 new Brand { BrandId = 3, BrandName = "Huawei" },

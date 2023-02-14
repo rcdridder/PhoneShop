@@ -1,6 +1,7 @@
 ﻿using Business.Domain.Interfaces;
 using Business.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Repository;
 using System.Windows;
 
 namespace WpfApp
@@ -16,6 +17,7 @@ namespace WpfApp
             IServiceCollection services = new ServiceCollection()
                 .AddSingleton<MainWindow>()
                 .AddScoped<IPhoneService, PhoneService>();
+            services.AddRepositories();
             serviceProvider = services.BuildServiceProvider();
         }
 

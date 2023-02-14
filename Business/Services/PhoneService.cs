@@ -5,14 +5,10 @@ namespace Business.Services
 {
     public class PhoneService : IPhoneService
     {
-        private IBrandRepository brandRepository;
         private IPhoneRepository phoneRepository;
 
-        public PhoneService(IBrandRepository brandRepository, IPhoneRepository phoneRepository)
-        {
-            this.brandRepository = brandRepository;
-            this.phoneRepository = phoneRepository;
-        }
+        public PhoneService(IPhoneRepository phoneRepository) => this.phoneRepository = phoneRepository;
+
         public List<Phone> GetAll() => phoneRepository.GetAll().ToList();
 
         public Phone GetById(int id) => phoneRepository.GetById(id);

@@ -2,11 +2,6 @@
 using Business.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository
 {
