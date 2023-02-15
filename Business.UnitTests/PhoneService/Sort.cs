@@ -8,9 +8,10 @@ namespace Business.UnitTests
     public class Sort
     {
         Mock<IPhoneRepository> phoneRepository = new Mock<IPhoneRepository>();
+        Mock<IBrandService> brandService = new Mock<IBrandService>();
         PhoneService phoneService;
 
-        public Sort() => phoneService = new(phoneRepository.Object);
+        public Sort() => phoneService = new(phoneRepository.Object, brandService.Object);
 
         [Fact]
         public void RetursAllPhonesSortedByBrand()

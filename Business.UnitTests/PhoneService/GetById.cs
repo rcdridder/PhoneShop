@@ -8,11 +8,12 @@ namespace Business.UnitTests
     public class GetById
     {
         Mock<IPhoneRepository> phoneRepository = new Mock<IPhoneRepository>();
+        Mock<IBrandService> brandService= new Mock<IBrandService>();
         PhoneService phoneService;
 
         public GetById()
         {
-           phoneService = new(phoneRepository.Object);
+           phoneService = new(phoneRepository.Object, brandService.Object);
         }
 
         [Fact]

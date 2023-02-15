@@ -8,9 +8,10 @@ namespace Business.UnitTests
     public class GetAll
     {
         Mock<IPhoneRepository> phoneRepository = new Mock<IPhoneRepository>();
+        Mock<IBrandService> brandService = new Mock<IBrandService>();
         PhoneService phoneService;
 
-        public GetAll() => phoneService = new(phoneRepository.Object);
+        public GetAll() => phoneService = new(phoneRepository.Object, brandService.Object);
 
 
         [Fact]

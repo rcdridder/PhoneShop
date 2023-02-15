@@ -13,9 +13,10 @@ namespace Business.UnitTests
     public class Search
     {
         Mock<IPhoneRepository> phoneRepository = new Mock<IPhoneRepository>();
+        Mock<IBrandService> brandService= new Mock<IBrandService>();
         PhoneService phoneService;
 
-        public Search() => phoneService = new(phoneRepository.Object);
+        public Search() => phoneService = new(phoneRepository.Object, brandService.Object);
 
         [Fact]
         public void QueryReturnsSinglePhone()
