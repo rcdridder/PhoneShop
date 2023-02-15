@@ -35,7 +35,7 @@
         <TextBox Name="tbPrice" Grid.Row="7" Margin="5 0 150 0"/>
         <Label Grid.Row="8" VerticalAlignment="Bottom">Stock:</Label>
         <TextBox Name="tbStock" Grid.Row="9" Margin="5 0 150 0"/>
-        <Button Name="btnAdd" Grid.Row="10" Margin="5 5 155 5">Apply</Button>
+        <Button Name="btnAdd" Click="btnAdd_Click" Grid.Row="10" Margin="5 5 155 5">Add</Button>
         <Button Name="btnCancel" Click="btnCancel_Click" Grid.Row="10" Margin="155 5 5 5">Cancel</Button>
     </Grid>
     

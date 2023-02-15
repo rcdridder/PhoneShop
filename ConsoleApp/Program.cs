@@ -11,7 +11,8 @@ Console.OutputEncoding = Encoding.UTF8;
 ConsoleKeyInfo userInput;
 
 IServiceCollection services = new ServiceCollection()
-    .AddScoped<IPhoneService, PhoneService>();
+    .AddScoped<IPhoneService, PhoneService>()
+    .AddScoped<IBrandService, BrandService>();
 services.AddRepositories();
 ServiceProvider serviceProvider = services.BuildServiceProvider();
 IPhoneService phoneService = serviceProvider.GetService<IPhoneService>();

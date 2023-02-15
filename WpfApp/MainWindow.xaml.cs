@@ -46,13 +46,22 @@ namespace WpfApp
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddPhone addPhone= new();
+            AddPhone addPhone= new(phoneService);
             addPhone.ShowDialog();
+            lbPhones.ItemsSource = phoneService.Sort();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Are you sure you want to delete this phone from the database?", "Delete phone", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this phone from the database?", "Delete phone", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if(result == MessageBoxResult.Yes)
+            {
+                Phone phone = lbPhones.SelectedItem as Phone;
+                phoneService.Delete(phone);
+                MessageBox.Show("Phone successfully deleted from database.", "Phone deleted", MessageBoxButton.OK);
+                lbPhones.ItemsSource = phoneService.Sort();
+            }
+                
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
