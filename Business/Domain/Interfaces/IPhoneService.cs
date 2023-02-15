@@ -5,6 +5,16 @@ namespace Business.Domain.Interfaces
     public interface IPhoneService
     {
         /// <summary>
+        /// Adds a single phone to database.
+        /// </summary>
+        /// <param name="phone"></param>
+        void Add(Phone phone);
+        /// <summary>
+        /// Deletes single phone from database.
+        /// </summary>
+        /// <param name="phone"></param>
+        void Delete(Phone phone);
+        /// <summary>
         /// Returns all phones from list.
         /// </summary>
         /// <returns></returns>
@@ -25,5 +35,10 @@ namespace Business.Domain.Interfaces
         /// </summary>
         /// <returns></returns>
         List<Phone> Search(string query);
+        /// <summary>
+        /// Updates phone in database.
+        /// </summary>
+        /// <param name="phone"></param>
+        void Update(Phone phone);
     }
 }

@@ -16,7 +16,8 @@ namespace WpfApp
         {
             IServiceCollection services = new ServiceCollection()
                 .AddSingleton<MainWindow>()
-                .AddScoped<IPhoneService, PhoneService>();
+                .AddScoped<IPhoneService, PhoneService>()
+                .AddScoped<IBrandService, BrandService>();
             services.AddRepositories();
             serviceProvider = services.BuildServiceProvider();
         }
