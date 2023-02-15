@@ -23,7 +23,8 @@ namespace WpfApp
 
         private void lbPhones_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            btnDelete.IsEnabled = true;
+            btnEdit.IsEnabled = true;
             if (lbPhones.SelectedItem != null)
             {
                 Phone phone = lbPhones.SelectedItem as Phone;
@@ -41,6 +42,23 @@ namespace WpfApp
                 lbPhones.ItemsSource = phoneService.Search(tbSearch.Text);
             else
                 lbPhones.ItemsSource = phoneService.Sort();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddPhone addPhone= new();
+            addPhone.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Are you sure you want to delete this phone from the database?", "Delete phone", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            EdtiPhone editPhone = new();
+            editPhone.ShowDialog();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
