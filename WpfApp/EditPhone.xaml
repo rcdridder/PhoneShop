@@ -1,12 +1,12 @@
-﻿<Window x:Class="WpfApp.EdtiPhone"
+﻿<Window x:Class="WpfApp.EditPhone"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-        Title="Edit phone" Height="Auto" Width="300"
-        WindowStartupLocation="CenterScreen" SizeToContent="Height">
+        Title="Edit phone" Height="Auto" Width="Auto" MinWidth="250" MaxWidth="800"
+        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -35,7 +35,7 @@
         <TextBox Name="tbPrice" Grid.Row="7" Margin="5 0 150 0"/>
         <Label Grid.Row="8" VerticalAlignment="Bottom">Stock:</Label>
         <TextBox Name="tbStock" Grid.Row="9" Margin="5 0 150 0"/>
-        <Button Name="btnAdd" Grid.Row="10" Margin="5 5 155 5">Apply</Button>
-        <Button Name="btnCancel" Click="btnCancel_Click" Grid.Row="10" Margin="155 5 5 5">Cancel</Button>
+        <Button Name="btnApply" Click="btnApply_Click" Grid.Row="10" MinWidth="100" HorizontalAlignment="Left" Margin="5">Apply</Button>
+        <Button Name="btnCancel" Click="btnCancel_Click" Grid.Row="10" MinWidth="100" HorizontalAlignment="Right" Margin="5">Cancel</Button>
     </Grid>
 </Window>

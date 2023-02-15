@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-        Title="Add a new phone" Height="Auto" Width="300"
-        WindowStartupLocation="CenterScreen" SizeToContent="Height">
+        Title="Add a new phone" Height="Auto" Width="Auto" MinWidth="250" MaxWidth="800"
+        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -35,8 +35,8 @@
         <TextBox Name="tbPrice" Grid.Row="7" Margin="5 0 150 0"/>
         <Label Grid.Row="8" VerticalAlignment="Bottom">Stock:</Label>
         <TextBox Name="tbStock" Grid.Row="9" Margin="5 0 150 0"/>
-        <Button Name="btnAdd" Click="btnAdd_Click" Grid.Row="10" Margin="5 5 155 5">Add</Button>
-        <Button Name="btnCancel" Click="btnCancel_Click" Grid.Row="10" Margin="155 5 5 5">Cancel</Button>
+        <Button Name="btnAdd" Click="btnAdd_Click" Grid.Row="10" MinWidth="100" HorizontalAlignment="Left" Margin="5">Add</Button>
+        <Button Name="btnCancel" Click="btnCancel_Click" Grid.Row="10" MinWidth="100" HorizontalAlignment="Right" Margin="5">Cancel</Button>
     </Grid>
     
 </Window>

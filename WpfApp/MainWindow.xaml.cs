@@ -66,8 +66,9 @@ namespace WpfApp
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            EdtiPhone editPhone = new();
+            EditPhone editPhone = new(phoneService, lbPhones.SelectedItem as Phone);
             editPhone.ShowDialog();
+            lbPhones.ItemsSource = phoneService.Sort();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
