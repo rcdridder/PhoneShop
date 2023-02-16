@@ -3,7 +3,7 @@ using Business.Domain.Models;
 using Business.Services;
 using Moq;
 
-namespace Business.UnitTests
+namespace Business.UnitTests.Phones
 {
     public class GetAll
     {
@@ -51,7 +51,7 @@ namespace Business.UnitTests
             };
             IQueryable<Phone> mockList = dbPhones.AsQueryable();
             phoneRepository.Setup(x => x.GetAll()).Returns(mockList);
-            //Assert, Act
+            //Act
             List<Phone> phones = phoneService.GetAll();
             //Assert
             Assert.Equal(2, phones.Count);

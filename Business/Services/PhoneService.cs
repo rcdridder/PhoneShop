@@ -44,7 +44,7 @@ namespace Business.Services
 
         public void Update(Phone phone) => phoneRepository.Update(phone);
 
-        private static decimal CalculatePriceNoVat(decimal priceVat) => priceVat / Convert.ToDecimal(1.21);
+        private decimal CalculatePriceNoVat(decimal priceVat) => priceVat / Convert.ToDecimal(1.21);
 
     }
 }

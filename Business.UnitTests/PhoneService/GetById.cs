@@ -3,7 +3,7 @@ using Business.Domain.Models;
 using Business.Services;
 using Moq;
 
-namespace Business.UnitTests
+namespace Business.UnitTests.Phones
 {
     public class GetById
     {
@@ -41,7 +41,7 @@ namespace Business.UnitTests
             Assert.Equal("iPhone 11", phone.Model);
         }
         [Fact]
-        public void InvalidNumberThrowsException()
+        public void InvalidNumberReturnsNull()
         {
             //Arrange
             Phone dbPhone = new()
@@ -63,7 +63,6 @@ namespace Business.UnitTests
             Phone phone = phoneService.GetById(10);
             //Assert
             Assert.Null(phone);
-
         }
     }
 }

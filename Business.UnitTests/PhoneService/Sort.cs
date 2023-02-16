@@ -3,7 +3,7 @@ using Business.Domain.Models;
 using Business.Services;
 using Moq;
 
-namespace Business.UnitTests
+namespace Business.UnitTests.Phones
 {
     public class Sort
     {

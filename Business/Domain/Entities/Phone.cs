@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Business.Domain.Models
 {
+    [ExcludeFromCodeCoverage]
     public class Phone
     {
         [Key]

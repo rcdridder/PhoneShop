@@ -2,18 +2,13 @@
 using Business.Domain.Models;
 using Business.Services;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.UnitTests
+namespace Business.UnitTests.Phones
 {
     public class Search
     {
         Mock<IPhoneRepository> phoneRepository = new Mock<IPhoneRepository>();
-        Mock<IBrandService> brandService= new Mock<IBrandService>();
+        Mock<IBrandService> brandService = new Mock<IBrandService>();
         PhoneService phoneService;
 
         public Search() => phoneService = new(phoneRepository.Object, brandService.Object);
