@@ -366,3 +366,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /ConsoleApp/App.config
 /WpfApp/App.config
+/Api/Properties/launchSettings.json
+/Api/appsettings.json
+/Api/appsettings.Development.json
