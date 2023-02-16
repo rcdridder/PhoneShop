@@ -8,7 +8,7 @@ using Repository;
 using System.Text;
 
 Console.OutputEncoding = Encoding.UTF8;
-ConsoleKeyInfo userInput;
+string userInput;
 
 IServiceCollection services = new ServiceCollection()
     .AddScoped<IPhoneService, PhoneService>()
@@ -21,28 +21,22 @@ while (true)
 {
     Console.Clear();
     MainMenu();
-    userInput = Console.ReadKey();
-    switch (userInput.Key)
+    userInput = Console.ReadLine();
+    switch (userInput)
     {
-        case ConsoleKey.Escape: ExitApp(); break;
-        case ConsoleKey.S:
+        case "q": ExitApp(); break;
+        case "s":
             {
                 SortPhones();
-                userInput = Console.ReadKey();
-                if (userInput.Key == ConsoleKey.Escape)
-                    ExitApp();
-                else
-                    PhoneDetails(userInput);
+                userInput= Console.ReadLine();
+                PhoneDetails(userInput);
             }
             break;
-        case ConsoleKey.F:
+        case "f":
             {
                 SearchPhones();
-                userInput = Console.ReadKey();
-                if (userInput.Key == ConsoleKey.Escape)
-                    ExitApp();
-                else
-                    PhoneDetails(userInput);
+                userInput = Console.ReadLine();
+                PhoneDetails(userInput);
             }
             break;
         default: PhoneDetails(userInput); break;
@@ -55,7 +49,7 @@ void MainMenu()
     List<Phone> phoneList = phoneService.GetAll();
     Console.WriteLine(
         "Welcome to the Phoneshop!\n\n" +
-        "Type in a number to see phone details:\n");
+        "Enter a number to see phone details:\n");
     foreach (Phone phone in phoneList)
     {
         Console.WriteLine($"{phone.PhoneId}. {phone.Brand.BrandName} {phone.Model}");
@@ -65,34 +59,29 @@ void MainMenu()
         "\nPress 'Escape' to exit the application.");
 }
 
-void PhoneDetails(ConsoleKeyInfo number)
+void PhoneDetails(string input)
 {
-    Console.Clear();
-    int id = 0;
-    switch (number.Key)
-    {
-        case ConsoleKey.NumPad1: case ConsoleKey.D1: id = 1; break;
-        case ConsoleKey.NumPad2: case ConsoleKey.D2: id = 2; break;
-        case ConsoleKey.NumPad3: case ConsoleKey.D3: id = 3; break;
-        case ConsoleKey.NumPad4: case ConsoleKey.D4: id = 4; break;
-        case ConsoleKey.NumPad5: case ConsoleKey.D5: id = 5; break;
-        default: break;
-    }
 
-    try
+    if(int.TryParse(input, out int id))
     {
-        Phone phone = phoneService.GetById(id);
-        Console.WriteLine(
-            $"Phone: {phone.Brand.BrandName} {phone.Model}.\n" +
-            $"Price: {phone.PriceVat.ToString("C")}.\n" +
-            $"In Stock: {phone.Stock}\n\n" +
-            $"Description:\n" +
-            $"{phone.Description}");
+        Console.Clear();
+        try
+        {
+            Phone phone = phoneService.GetById(id);
+            Console.WriteLine(
+                $"Phone: {phone.Brand.BrandName} {phone.Model}.\n" +
+                $"Price: {phone.PriceVat.ToString("C")}.\n" +
+                $"In Stock: {phone.Stock}\n\n" +
+                $"Description:\n" +
+                $"{phone.Description}");
+        }
+        catch (NullReferenceException ex)
+        {
+            Console.WriteLine("Invalid phone number. Please enter a valid number");
+        }
     }
-    catch (NullReferenceException ex)
-    {
-        Console.WriteLine("Invalid phone number. Please enter a valid number");
-    }
+    else
+        Console.WriteLine("Invalid phone number. Please enter a valid number"); ;
     Console.WriteLine("\nPress a key to return to the main menu.");
 }
 
@@ -118,7 +107,7 @@ void SortPhones()
     Console.Clear();
     Console.WriteLine(
     "Welcome to the Phoneshop!\n\n" +
-    "Type in a number to see phone details:\n");
+    "Enter a phone number to see phone details:\n");
     foreach (Phone phone in phoneList)
     {
         Console.WriteLine($"{phone.PhoneId}. {phone.Brand.BrandName} {phone.Model}");
